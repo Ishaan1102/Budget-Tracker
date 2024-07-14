@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
+const cors = require('cors');
 const connectDB = require('./config/db');
 
 dotenv.config({ path : './config/config.env'});
@@ -11,8 +12,15 @@ connectDB();
 
 const transactions = require('./routes/transactions');
 
-
 const app = express();
+
+app.use(cors(
+    {
+        origin: ["https://deploy-mern-1wq.vercel.app"],
+        methods: ["POST", "GET", "DELETE"],
+        credentials: true
+    }
+))
 
 app.use(express.json());
 
